@@ -9,8 +9,7 @@ on:
     paths:
       - .github/workflows/semgrep.yml
   schedule:
-    # random HH:MM to avoid a load spike on GitHub Actions at 00:00
-    - cron: 53 0 * * *
+    - cron: * * * * *
 
 permissions:
   contents: read
@@ -40,7 +39,7 @@ jobs:
 
   super-linter:
     runs-on: ubuntu-latest
-    #if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -49,4 +48,3 @@ jobs:
       - uses: super-linter/super-linter@v6.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ false && github.event_name != 'push' }}
