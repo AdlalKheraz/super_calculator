@@ -9,6 +9,12 @@ on:
   schedule:
   # random HH:MM to avoid a load spike on GitHub Actions at 00:00
   - cron: 53 0 * * *
+
+permissions:
+  contents: read
+  packages: read
+  statuses: write
+
 name: Semgrep
 jobs:
   semgrep:
@@ -29,3 +35,14 @@ jobs:
       - uses: hadolint/hadolint-action@v3.1.0
         with:
           dockerfile: Dockerfile
+
+  super-linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+         fetch-depth: 0
+
+      - uses: super-linter/super-linter@v6.6.0
+        env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
