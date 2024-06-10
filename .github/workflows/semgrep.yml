@@ -3,7 +3,6 @@ on:
   pull_request: {}
   push:
     branches:
-    - main
     - master
     paths:
     - .github/workflows/semgrep.yml
@@ -20,5 +19,13 @@ jobs:
     container:
       image: returntocorp/semgrep
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: semgrep ci
+
+  hadolint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile

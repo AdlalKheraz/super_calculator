@@ -32,9 +32,8 @@ jobs:
 
       - name: Extract tag
         id: extract_tag
-        run: | 
-          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-          echo $GITHUB_ENV
+        run:  echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v3.2.0
         with:
