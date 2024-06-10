@@ -49,4 +49,4 @@ jobs:
       - uses: super-linter/super-linter@v6.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ false && github.event_name != 'pull_request' }}
+        if: ${{ false && github.event_name != 'push' }}
