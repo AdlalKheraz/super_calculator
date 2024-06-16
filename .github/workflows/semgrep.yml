@@ -1,5 +1,5 @@
 ---
-
+name: Lint workflow
 on:
   workflow_dispatch: {}
   pull_request: {}
@@ -8,16 +8,12 @@ on:
       - master
     paths:
       - .github/workflows/semgrep.yml
-  schedule:
-    # random HH:MM to avoid a load spike on GitHub Actions at 00:00
-    - cron: 53 0 * * *
 
 permissions:
   contents: read
   packages: read
   statuses: write
 
-name: Semgrep
 jobs:
   semgrep:
     name: semgrep/ci
@@ -31,7 +27,7 @@ jobs:
       - run: semgrep ci
 
   hadolint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
       - uses: hadolint/hadolint-action@v3.1.0
@@ -39,8 +35,8 @@ jobs:
           dockerfile: Dockerfile
 
   super-linter:
-    runs-on: ubuntu-latest
-    #if: github.event_name == 'pull_request'
+    runs-on: ubuntu-20.04
+    if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v4
         with:
